@@ -1,25 +1,36 @@
 const express = require('express');
-const path = require('path');
-
-
-const indexRouter = require('./routes/index');
-
-const moviesRoutes = require('./routes/moviesRoutes');
-const genresRoutes = require('./routes/genresRoutes');
 const app = express();
+const methodOverride = require('method-override');
+const dotenv = require('dotenv');
+dotenv.config();
 
-// view engine setup
-app.set('views', path.resolve(__dirname, './views'));
+
+// Vistas y recursos estáticos
+app.use(express.static('public'));
+
+app.use((req, res, next) => {
+    if (process.env.MAINTENANCE_MODE === 1) {
+        res.status(503).render('503');
+    }
+
+    next();
+})
+
 app.set('view engine', 'ejs');
+app.set('views', 'src/views');
 
-app.use(express.static(path.resolve(__dirname, '../public')));
+// Formularios
+app.use(express.urlencoded({extended: false}));
+app.use(methodOverride('_method'));
 
-//URL encode  - Para que nos pueda llegar la información desde el formulario al req.body
-app.use(express.urlencoded({ extended: false }));
-
+// Rutas
+const indexRouter = require('./routes/indexRouter');
+const userRouter = require('./routes/userRouter');
+const productRouter = require('./routes/productRouter');
 
 app.use('/', indexRouter);
-app.use(moviesRoutes);
-app.use(genresRoutes);
+app.use('/', userRouter);
+app.use('/products', productRouter);
 
-app.listen('3001', () => console.log('Servidor corriendo en el puerto 3001'));
+// Iniciamos el servidor
+app.listen(3000, () => console.log('Servidor escuchando en el puerto 3000'));

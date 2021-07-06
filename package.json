@@ -1,22 +1,24 @@
 {
-  "name": "myApp",
+  "name": "sequelize-ecommerce",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "Ecommerce simple utilizando Node, Express y React",
+  "main": "app.js",
   "scripts": {
-    "test": "nodemon src/app.js"
+    "start": "node src/app.js",
+    "startdev": "nodemon -L src/app.js -e js,ejs"
   },
-  "keywords": [],
-  "author": "",
+  "author": "Javier Herrera",
   "license": "ISC",
   "dependencies": {
-    "ejs": "^3.1.5",
+    "dotenv": "^8.2.0",
+    "ejs": "^3.1.3",
     "express": "^4.17.1",
-    "moment": "^2.29.1",
-    "mysql2": "^2.2.5",
-    "sequelize": "^6.5.0"
+    "method-override": "^3.0.0",
+    "multer": "^1.4.2",
+    "mysql2": "^2.1.0",
+    "sequelize": "^5.21.11"
   },
   "devDependencies": {
-    "nodemon": "^2.0.7"
+    "nodemon": "^2.0.4"
   }
 }
